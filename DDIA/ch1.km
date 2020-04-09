@@ -3,22 +3,662 @@
         "data": {
             "id": "c0s9kbbziao0",
             "created": 1582331106835,
-            "text": "MainTopic"
+            "text": "Reliable, Scalable, Maintainable Application"
         },
         "children": [
             {
                 "data": {
-                    "id": "c0sf36x2lug0",
-                    "created": 1582346691695,
-                    "text": "topic",
-                    "note": "ss"
+                    "id": "c0sij8krqtc0",
+                    "created": 1582356412461,
+                    "text": "What",
+                    "expandState": "expand"
                 },
                 "children": [
                     {
                         "data": {
-                            "id": "c0sfh53d38o0",
-                            "created": 1582347784820,
-                            "text": "topic"
+                            "id": "c0sih7wkm4g0",
+                            "created": 1582356254270,
+                            "text": "Data-intensive",
+                            "expandState": "expand",
+                            "layout_right_offset": {
+                                "x": 26,
+                                "y": 98
+                            },
+                            "font-size": 16
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0sihoe38io0",
+                                    "created": 1582356290157,
+                                    "text": "database",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sihxm4lgw0",
+                                    "created": 1582356310234,
+                                    "text": "cache",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sii3o0gk00",
+                                    "created": 1582356323409,
+                                    "text": "search indexes",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sii632az40",
+                                    "created": 1582356328673,
+                                    "text": "stream processing",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sii84fol40",
+                                    "created": 1582356333109,
+                                    "text": "batch processing",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0sihj1uacw0",
+                            "created": 1582356278533,
+                            "text": "compute-intensive",
+                            "layout_right_offset": {
+                                "x": 20,
+                                "y": -155
+                            },
+                            "font-size": 16
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0sipvkeuhs0",
+                            "created": 1582356932690,
+                            "text": "design data system",
+                            "layout_right_offset": {
+                                "x": 11,
+                                "y": 72
+                            },
+                            "font-size": 16
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0simhjtk0g0",
+                    "created": 1582356667087,
+                    "text": "application requirements",
+                    "layout_mind_offset": {
+                        "x": -43.33329266972214,
+                        "y": 172.33333479033558
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0siolbmevk0",
+                            "created": 1582356832027,
+                            "text": "functional",
+                            "font-size": 16
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0sior34lig0",
+                            "created": 1582356844574,
+                            "text": "non functional",
+                            "font-size": 16,
+                            "expandState": "expand"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0sip6wy4js0",
+                                    "created": 1582356879029,
+                                    "text": "reliability",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sipgtl5m00",
+                                    "created": 1582356900593,
+                                    "text": "scalability",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sipedsk2o0",
+                                    "created": 1582356895285,
+                                    "text": "maintainability",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0siq6tpqdc0",
+                    "created": 1582356957197,
+                    "text": "Reliability",
+                    "layout_mind_offset": {
+                        "x": 3,
+                        "y": 209
+                    },
+                    "expandState": "expand",
+                    "priority": 1
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0sitzy76740",
+                            "created": 1582357255688,
+                            "text": "fault",
+                            "font-size": 16
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0siudi1jo80",
+                                    "created": 1582357285186,
+                                    "text": "one component",
+                                    "layout_left_offset": {
+                                        "x": 1,
+                                        "y": -15
+                                    },
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0siu2xsyk00",
+                            "created": 1582357262194,
+                            "text": "failure",
+                            "font-size": 16
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0siueut9e80",
+                                    "created": 1582357288135,
+                                    "text": "System",
+                                    "layout_left_offset": {
+                                        "x": -6,
+                                        "y": 15
+                                    },
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0sivh8fcso0",
+                            "created": 1582357371676,
+                            "text": "build fault-tolerent system",
+                            "layout_left_offset": {
+                                "x": 7,
+                                "y": 40
+                            },
+                            "font-size": 16
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0siwpq5kyo0",
+                                    "created": 1582357468526,
+                                    "text": "The Netflix Chaos Monkey"
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0siyluym1s0",
+                    "created": 1582357616838,
+                    "text": "Scalability",
+                    "layout_mind_offset": {
+                        "x": -2,
+                        "y": -116
+                    },
+                    "priority": 2,
+                    "expandState": "expand"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0t2dp3390o0",
+                            "created": 1582412400410,
+                            "text": "Describing Load",
+                            "font-size": 16,
+                            "expandState": "expand",
+                            "layout_left_offset": {
+                                "x": 6,
+                                "y": -30
+                            }
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0t2fgvu6880",
+                                    "created": 1582412539286,
+                                    "text": "parameters",
+                                    "expandState": "expand",
+                                    "font-size": 16
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0t2eohatnk0",
+                                            "created": 1582412477457,
+                                            "text": "QPS to server/database",
+                                            "font-size": 16
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t2evmmsgw0",
+                                            "created": 1582412493017,
+                                            "text": "cache hit rates",
+                                            "font-size": 16
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t4hn1v62w0",
+                                            "created": 1582418351659,
+                                            "text": "applications specific",
+                                            "font-size": 16,
+                                            "expandState": "expand"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c0t4il8ezc00",
+                                                    "created": 1582418426066,
+                                                    "text": "Slack",
+                                                    "expandState": "expand",
+                                                    "font-size": 16
+                                                },
+                                                "children": [
+                                                    {
+                                                        "data": {
+                                                            "id": "c0t2f1oknjs0",
+                                                            "created": 1582412506195,
+                                                            "text": "network connections",
+                                                            "font-size": 16
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c0t4hqzmoaw0",
+                                                    "created": 1582418360231,
+                                                    "text": "Twitter case",
+                                                    "font-size": 16
+                                                },
+                                                "children": [
+                                                    {
+                                                        "data": {
+                                                            "id": "c0t4ht366j40",
+                                                            "created": 1582418364799,
+                                                            "text": "followers 决定了 fanout rates",
+                                                            "font-size": 16,
+                                                            "layout_left_offset": {
+                                                                "x": 2,
+                                                                "y": 14
+                                                            }
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c0t2fjpe1cw0",
+                                    "created": 1582412545426,
+                                    "text": "average case vs peak hour / worst case",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0t2g1jeuf40",
+                            "created": 1582412584247,
+                            "text": "Describing Performance",
+                            "font-size": 16,
+                            "expandState": "expand",
+                            "layout_left_offset": {
+                                "x": -33,
+                                "y": 7
+                            }
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0t2ocp8v8w0",
+                                    "created": 1582413235458,
+                                    "text": "Queue deday",
+                                    "layout_left_offset": {
+                                        "x": -37,
+                                        "y": 211
+                                    },
+                                    "font-size": 16
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0t2pju3e680",
+                                            "created": 1582413329353,
+                                            "text": "head-of-line blokcing",
+                                            "font-size": 16,
+                                            "layout_left_offset": {
+                                                "x": -19,
+                                                "y": 13
+                                            }
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t3rrtfxqw0",
+                                            "created": 1582416324566,
+                                            "text": "measure response time on the client side",
+                                            "font-size": 16,
+                                            "layout_left_offset": {
+                                                "x": -19,
+                                                "y": 51
+                                            }
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c0t2ok8jwhs0",
+                                    "created": 1582413251863,
+                                    "text": "metrics",
+                                    "expandState": "expand",
+                                    "font-size": 16,
+                                    "layout_left_offset": {
+                                        "x": -31,
+                                        "y": -89
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0t2ju9gamo0",
+                                            "created": 1582412881864,
+                                            "text": "batch System like Hadoop",
+                                            "expandState": "expand",
+                                            "font-size": 16
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c0t2h40e8xc0",
+                                                    "created": 1582412667992,
+                                                    "text": "throughput",
+                                                    "font-size": 16
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t2jywag680",
+                                            "created": 1582412891952,
+                                            "text": "online system",
+                                            "expandState": "expand",
+                                            "font-size": 16
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c0t2kyonx1s0",
+                                                    "created": 1582412969855,
+                                                    "text": "latency",
+                                                    "font-size": 16
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c0t2lykhlc00",
+                                    "created": 1582413047967,
+                                    "text": "Use Percentile",
+                                    "font-size": 16,
+                                    "layout_left_offset": {
+                                        "x": -83,
+                                        "y": -62
+                                    },
+                                    "expandState": "expand"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0t2ma9py2g0",
+                                            "created": 1582413073437,
+                                            "text": "don't use mean :(",
+                                            "layout_left_offset": {
+                                                "x": 18,
+                                                "y": -5
+                                            },
+                                            "font-size": 16
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t2qf1dlnk0",
+                                            "created": 1582413397273,
+                                            "text": "high percentiles of response times",
+                                            "font-size": 16
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c0t2qnbfkoo0",
+                                                    "created": 1582413415295,
+                                                    "text": "也叫tail latency",
+                                                    "font-size": 16
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0t2mxamz1c0",
+                                            "created": 1582413123559,
+                                            "text": "SLA",
+                                            "font-size": 16,
+                                            "layout_left_offset": {
+                                                "x": -38,
+                                                "y": 5
+                                            }
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0t3udobag80",
+                            "created": 1582416528873,
+                            "text": "Coping with Load",
+                            "font-size": 16,
+                            "layout_left_offset": {
+                                "x": -7,
+                                "y": 83
+                            },
+                            "expandState": "expand"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0t3unifzl40",
+                                    "created": 1582416550286,
+                                    "text": "scale up vs scale out ",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0t3vtnev680",
+                                    "created": 1582416642011,
+                                    "text": "manually vs elastic",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0t3z3jk7j40",
+                                    "created": 1582416898639,
+                                    "text": "Take stateful data system into distributed can be hard",
+                                    "font-size": 16
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0t3zs2ch940",
+                                            "created": 1582416952017,
+                                            "text": "For db, ususally scale up until cost or availablity force you to make it distributed",
+                                            "font-size": 16,
+                                            "layout_left_offset": {
+                                                "x": 4,
+                                                "y": 33
+                                            }
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0sj0q9s68w0",
+                    "created": 1582357783170,
+                    "text": "Maintainability",
+                    "layout_mind_offset": {
+                        "x": 53,
+                        "y": 137
+                    },
+                    "priority": 3
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0sj18v4mwg0",
+                            "created": 1582357823642,
+                            "text": "Operability",
+                            "font-size": 16
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0sj19ym1hc0",
+                            "created": 1582357826030,
+                            "text": "Simplicity",
+                            "font-size": 16
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0sj1snox400",
+                                    "created": 1582357866728,
+                                    "text": "big ball of mud :(",
+                                    "priority": null,
+                                    "progress": null,
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sj2o4jd800",
+                                    "created": 1582357935227,
+                                    "text": "removing accidental complexity",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0sj3viw7eg0",
+                                    "created": 1582358029698,
+                                    "text": "abstraction",
+                                    "font-size": 16
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0sj1hq1xdk0",
+                            "created": 1582357842926,
+                            "text": "Evolvability",
+                            "font-size": 16
                         },
                         "children": []
                     }

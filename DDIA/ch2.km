@@ -1,0 +1,236 @@
+{
+    "root": {
+        "data": {
+            "id": "c0ts1lfqgyo0",
+            "created": 1582484800956,
+            "text": "Data Models and Query Language"
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "c0ts1xb4zf40",
+                    "created": 1582484826799,
+                    "text": "Why important"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0ts24u3w2o0",
+                            "created": 1582484843183,
+                            "text": "how we write the application"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0ts2avl6g80",
+                            "created": 1582484856334,
+                            "text": "how we think abou the problem"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0ts2xcee4g0",
+                    "created": 1582484905239,
+                    "text": "Layered Application",
+                    "layout_mind_offset": {
+                        "x": -70.66662030750012,
+                        "y": 107.0000051657355
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0ts3kvzgvc0",
+                            "created": 1582484956490,
+                            "text": "objects / Data strcutre"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0ts3yi6t080",
+                            "created": 1582484986130,
+                            "text": "general data model (chapter 2)"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0ts45i6ex40",
+                                    "created": 1582485001367,
+                                    "text": "json"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0ts46x7jx40",
+                                    "created": 1582485004453,
+                                    "text": "xml"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0ts47zwjy00",
+                                    "created": 1582485006793,
+                                    "text": "table in database"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c0ts4bwl4140",
+                                    "created": 1582485015299,
+                                    "text": "graph"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0ts43rwzg80",
+                            "created": 1582484997602,
+                            "text": "database layer (chapter 3)"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c0ts4maptg80",
+                            "created": 1582485037921,
+                            "text": "electrical currents, pluses of light, magnetic fields ..."
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0ts95pcpgw0",
+                    "created": 1582485393622,
+                    "text": "Relational Model vs Document Model",
+                    "layout_mind_offset": {
+                        "x": -979,
+                        "y": -512
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c0twx3qazzk0",
+                            "created": 1582498554505,
+                            "text": "Retional",
+                            "layout_left_offset": {
+                                "x": -7,
+                                "y": -19
+                            },
+                            "expandState": "expand"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0twz3vxc7c0",
+                                    "created": 1582498711574,
+                                    "text": "Pro",
+                                    "expandState": "expand"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0twx623qow0",
+                                            "created": 1582498559572,
+                                            "text": "Transaction Processing"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0twyo3e8sg0",
+                                            "created": 1582498677197,
+                                            "text": "batch Processing"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c0twz1f464w0",
+                                    "created": 1582498706204,
+                                    "text": "cons"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c0twzeoq4f40",
+                                            "created": 1582498735083,
+                                            "text": "Object-relational Mismatch"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c0tx6qewq2o0",
+                                                    "created": 1582499309160,
+                                                    "text": "OOP Language"
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c0txbd2ovy00",
+                                                    "created": 1582499671944,
+                                                    "text": "databse is Relational"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c0txb5hsf600",
+                                            "created": 1582499655442,
+                                            "text": "use JSON"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0ts9elfzgg0",
+                    "created": 1582485412977,
+                    "text": "Query Languages for Data",
+                    "layout_mind_offset": {
+                        "x": -19,
+                        "y": 217
+                    }
+                },
+                "children": []
+            },
+            {
+                "data": {
+                    "id": "c0ts9skg4e00",
+                    "created": 1582485443391,
+                    "text": "Graph Data Model",
+                    "layout_mind_offset": {
+                        "x": -54,
+                        "y": -37
+                    }
+                },
+                "children": []
+            }
+        ]
+    },
+    "template": "right",
+    "theme": "classic",
+    "version": "1.4.43"
+}
