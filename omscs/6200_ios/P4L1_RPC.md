@@ -46,7 +46,7 @@ Benefits of RPC
 
 ## 5. Structure of RPC
 
-![](2020-04-07-23-46-50.png)
+![](images/2020-04-07-23-46-50.png)
 
 ## 6. Steps in RPC
 0. bind: client finds and "binds" to desired server
@@ -83,10 +83,10 @@ RPC can use IDL that is:
 JEST INTERFACE! NOT IMPLEMENTATION!
 
 ## 9. Marshalling
-![](2020-04-08-00-01-08.png)
+![](images/2020-04-08-00-01-08.png)
 
 ## 10. Unmarshalling
-![](2020-04-08-00-02-21.png)
+![](images/2020-04-08-00-02-21.png)
 
 ## 11. Binding and Registry
 client determines...
@@ -198,7 +198,7 @@ Failures => retries; return as much information as possible
 - provides SunRPC/XDR documentation and code examples
 - older online reference still relevant
 - Linux man pages for "rpc"
-![](2020-04-08-02-26-07.png)
+![](images/2020-04-08-02-26-07.png)
 
 [Sun RPC Documents (maintained by Oracle)](https://docs.oracle.com/cd/E19683-01/816-1435/index.html)
 
@@ -252,7 +252,7 @@ rpcgen -c square.x
 
 
 ## 21. Summarizing XDR Compilation
-![](2020-04-08-02-47-33.png)
+![](images/2020-04-08-02-47-33.png)
 
 from `.x` => header, stubs...
 - Developer

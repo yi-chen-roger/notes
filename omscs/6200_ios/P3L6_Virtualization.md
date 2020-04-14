@@ -81,7 +81,7 @@ Bare-metal==hypervisor-based
   - drivers in VMM
   - used to have Linux control core, now remote APIs
 
-![](2020-04-07-01-09-04.png)
+![](images/2020-04-07-01-09-04.png)
 
 ## 9. Hosted Virtualization
 
@@ -89,13 +89,13 @@ Bare-metal==hypervisor-based
 
 - host OS owns all hardware
 - special VMM module provides hardware interface to VMs and deals with VM context switching
-  ![](2020-04-07-03-15-02.png)
+  ![](images/2020-04-07-03-15-02.png)
   Example: KVM (kernel-based VM)
 - based on Linux
 - KVM kernel module + QEMU for hardware virtualization
 - leverages Linux open-source community
 
-![](2020-04-07-03-15-53.png)
+![](images/2020-04-07-03-15-53.png)
 
 ## 10. Bare Metal Or Hosted Quiz
 
@@ -143,7 +143,7 @@ x86 has 4 protection levels(rings) and 2 protection modes(root & non-root)
 - root:
   - ring 0: hypervisor
 
-![](2020-04-07-12-05-34.png)
+![](images/2020-04-07-12-05-34.png)
 
 ## 13. Processor Virtualization (Trap-and-Emulate)
 
@@ -266,7 +266,7 @@ Pros:
 - device sharing difficult
 - VMM must have exact type of device as what VM expects
 - VM migration tricky
-  ![](2020-04-07-20-38-37.png)
+  ![](images/2020-04-07-20-38-37.png)
 
 ## 23. Hypervisor Direct Model
 
@@ -282,7 +282,7 @@ Approach: VMM intercepts all device access
   Cons:
 - latency of device operations
 - device driver ecosystem complexities in hypervisor
-  ![](2020-04-07-20-43-10.png)
+  ![](images/2020-04-07-20-43-10.png)
 
 ## 24. Split Direct Model
 
@@ -295,7 +295,7 @@ Approach: device access control split between
     Pros:
 - eliminate emulation overhead
 - allow for better management of shared devices
-  ![](2020-04-07-20-48-27.png)
+  ![](images/2020-04-07-20-48-27.png)
 
 ## 25. Hardware Virtualization
 
@@ -321,7 +321,7 @@ A: Yes.
 可以定义 device 怎么 share, 而不是 depend on 特定的硬件
 
 ## 27. x86 VT Revolution
-![](2020-04-07-21-06-36.png)
+![](images/2020-04-07-21-06-36.png)
 ## 28. Lesson Summary
 
 Virtualization

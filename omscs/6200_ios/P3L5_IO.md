@@ -34,7 +34,7 @@ I/O
 ## 3. I/O Devices
 
 ## 5. I/O Device Features
-![](2020-04-05-02-29-46.png)
+![](images/2020-04-05-02-29-46.png)
 - control registers
   - command
   - data transfers
@@ -45,7 +45,7 @@ I/O
   - e.g., analog to digital converters
 
 ## 6. CPU Device Interconnect
-![](2020-04-05-02-33-51.png)
+![](images/2020-04-05-02-33-51.png)
 Peripheral Component Interconnect (PCI)
 - PCI Express (PCIe) (> PCI-X > PCI)
 Other types of interconnects
@@ -110,7 +110,7 @@ Enter at least five device names
 
 ## 12.CPU-Device Interactions
 ### CPU-Device Interactions
-![](2020-04-05-20-36-07.png)
+![](images/2020-04-05-20-36-07.png)
 access device register == memory load/store
 
 memory-mapped I/O
@@ -137,7 +137,7 @@ CPU "programs" the device
 - via command registers
 - data movement
 
-![](2020-04-05-20-36-41.png)
+![](images/2020-04-05-20-36-41.png)
 
 Example: NIC, data == network packet
 - write command to request packet transmission
@@ -154,7 +154,7 @@ relies on DMA controller
 CPU "programs" the device
 - via command register
 - via DMA controls
-![](2020-04-05-20-44-54.png)
+![](images/2020-04-05-20-44-54.png)
 
 Example: NIC, data == network packet
 - write command to request packet transmission
@@ -169,7 +169,7 @@ For DMAs:
 - pinning regions (non-swappable)
 
 ## 16. Typical Device Access
-![](2020-04-05-20-53-33.png)
+![](images/2020-04-05-20-53-33.png)
 
 ## 17. OS Bypass
 ### Do you Have to Go Through the OS  
@@ -192,7 +192,7 @@ Asynchronous I/O operations
 - process continues
 - Later... process checks and retrieves result
 - Or process is notified that the operation completed and results are ready
-![](2020-04-06-00-44-41.png)
+![](images/2020-04-06-00-44-41.png)
 
 
 ## 19. Block Device Stack
@@ -203,7 +203,7 @@ kernel file system(FS)
 generic block layer
   - OS standardized block interface
 device driver
-![](2020-04-06-00-49-58.png)
+![](images/2020-04-06-00-49-58.png)
 
 ## 20. Block Device Quiz
 in linux, the `ioctl()` command can be used to manipulate devices. Complete the code snippet, using `ioctl` to determine the size of a blockdevice
@@ -222,7 +222,7 @@ close(fd);
 - What if devices work better with different FS implementations?
 - What if files are not on a local device(accessed via network)?
 
-![](2020-04-06-00-58-19.png)
+![](images/2020-04-06-00-58-19.png)
 
 ## 22. Virtual File System Abstractions
 - file == elements on which the VFS operates
@@ -245,17 +245,17 @@ close(fd);
   - data blocks
   - free blocks
 
-![](2020-04-06-01-16-25.png)
+![](images/2020-04-06-01-16-25.png)
 
 ## 24. ext2 Second Extended Filesystem
-![](2020-04-06-01-29-54.png)
+![](images/2020-04-06-01-29-54.png)
 目录只是特殊的文件, 上层会解析它成为dentry
 
 ## 25. inodes
 inodes == index of all disk blocks corresponding to a file
 - file => identified by inode
 - inode => list of all blocks + other metadata
-![](2020-04-06-01-50-10.png)
+![](images/2020-04-06-01-50-10.png)
 
 Pro:
 - easy to perform sequential and random access
@@ -273,7 +273,7 @@ Cons:
   - 256kb per entry
 - Double Indirect point
   - 64mb
-![](2020-04-06-01-59-16.png)
+![](images/2020-04-06-01-59-16.png)
 Pro: 
 - small inode =>  large file size
 Cons:

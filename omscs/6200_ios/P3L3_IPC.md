@@ -233,4 +233,4 @@ segment size == data size
 segment size < message size
 - transfer data in rounds;
   include protocol to track progress
-![](2020-03-22-23-34-50.png)
+![](images/2020-03-22-23-34-50.png)

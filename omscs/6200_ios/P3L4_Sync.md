@@ -144,7 +144,7 @@ monitor == programming style
   - enter_/exit_critical section in threads and concurrency lessons
 
 ## More Synchronization Constructs
-![](2020-03-23-02-23-47.png)
+![](images/2020-03-23-02-23-47.png)
 ALL need hardware support!
 
 
@@ -228,7 +228,7 @@ spinlock_lock(lock):
   - reset lock to 1(busy), but that's ok
 
 ## Shared Memory Multi Processors
-![](2020-03-23-03-03-21.png)
+![](images/2020-03-23-03-03-21.png)
 shared memory multiprocessor also called symmetric multiprocessor (SMPs)
 
 Caches
@@ -245,7 +245,7 @@ Cache-Coherence
 - non-cache coherent (NCC) 硬件不保证cache一致,责任在software
 - cache coherent(CC)
   
-![](2020-03-23-03-09-30.png)
+![](images/2020-03-23-03-09-30.png)
 
 Write-invalidate(WI) 
 - lower bandwidth
@@ -255,7 +255,7 @@ Write-update(WV)
 - update available immediately
 
 determined by hardware
-![](2020-03-23-03-12-56.png)
+![](images/2020-03-23-03-12-56.png)
 
 ## Cache Coherence and Atomics
 Atomic always issued to the memory controller
@@ -392,7 +392,7 @@ Common problem in spinlock implementations
 - Everyone tries to acquire the lock at the same time
   - delay alternatives
 
-![](2020-03-24-00-42-43.png)
+![](images/2020-03-24-00-42-43.png)
 - set unique `ticket` for arriving thread
 - assigned `queue[ticket]` is private lock
 - enter critical section when you have lock:
@@ -438,7 +438,7 @@ A: 32 * size of cache-line
 
 ## Spinlock Performance Comparisons
 
-![](2020-03-24-00-57-16.png)
+![](images/2020-03-24-00-57-16.png)
 
 Setup
 - N processes running critical section 1M times

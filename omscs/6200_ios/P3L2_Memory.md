@@ -41,7 +41,7 @@ Virtual ==> Physical
   - Arbitrate => segment registers
 
 ## 4. Hardware Support
-![](2020-03-29-17-36-26.png)
+![](images/2020-03-29-17-36-26.png)
 
 MMU (memory management unit) (in CPU package)
 - translate virtual to physical addresses
@@ -63,7 +63,7 @@ Virtual memory pages and physical memory page frames are the same size
 
 Virtual page number - VPN
 Physical frame number - PFN
-![](2020-03-29-17-42-57.png)
+![](images/2020-03-29-17-42-57.png)
 
 allocation on first touch!
 - Physical memory is allocated only it is really needed
@@ -80,7 +80,7 @@ Page Table
     - e.g. CR3 on x86
 
 ## 6. Page Table Entry
-![](2020-03-29-17-53-09.png)
+![](images/2020-03-29-17-53-09.png)
 Flags:
 - P - Present(valid/invalid)
 - D - Dirty(written to)
@@ -137,14 +137,14 @@ MMU
 
 
 ## 8. MultiLevel Page Tables
-![](2020-03-29-20-15-00.png)
+![](images/2020-03-29-20-15-00.png)
 Hierarchical Page Table
 - outer page table or top page table
   - page table directory
 - internal page table == only for valid memory regions
 - on `malloc` a new internal page table may be allocated
 
-![](2020-03-29-20-20-40.png)
+![](images/2020-03-29-20-20-40.png)
 - inner table address => 2^10 * page size = 2^ 10 * 2^ 10 = 1MB (每个inner table可以表示1MB)
 - don't need an inner table for each 1MB virtual memory gap
 
@@ -170,7 +170,7 @@ A process with 12 bit addresses has an address space where only the first 2 kb a
 How many total entires are there in a single-level page table that uses the first address format? 64
 How many total entires are needed in the inner page tables of the 2-level page table when the second format is uses?
 
-![](2020-03-29-21-27-13.png)
+![](images/2020-03-29-21-27-13.png)
 
 ## 10. Speeding Up Translation TLB
 
@@ -186,7 +186,7 @@ Four-level page table
 => slowdown!
 
 ### Page Table Cache (TLB)
-![](2020-03-29-22-17-16.png)
+![](images/2020-03-29-22-17-16.png)
 Translation Lookaside Buffer
 - MMU-level address translation cache
 - on TLB miss => Page table access from memory
@@ -201,14 +201,14 @@ x86 Core i7
 
 
 ## 11. Inverted Page Tables
-![](2020-03-29-22-45-11.png)
-![](2020-03-29-22-45-55.png)
+![](images/2020-03-29-22-45-11.png)
+![](images/2020-03-29-22-45-55.png)
 1. 根据pid算hash
 2. 找到linked list
 3. 再找对应的地址
    
 ## 12. Segmentation
-![](2020-03-29-22-34-31.png)
+![](images/2020-03-29-22-34-31.png)
 - segments == arbitrary granularity
   - e.g., code, heap, data, stack...
   - address == segment selector + offset
@@ -219,7 +219,7 @@ x86 Core i7
     - Linux: up to 8k per process / 8k global segment
   - Intel x86_64 => default mode is just paging
 
-![](2020-03-29-22-39-22.png)
+![](images/2020-03-29-22-39-22.png)
 
 ## 13. Page Size
 How large is a page?
@@ -258,7 +258,7 @@ memory allocator
 ## 16. Memory Allocation Challenges
 Requests for page frames
 可能会有holes => external fragmentation
-![](2020-04-04-16-01-34.png)
+![](images/2020-04-04-16-01-34.png)
 
 Allocation algorithm must concern with 
 - to avoid fragmentation
@@ -266,7 +266,7 @@ Allocation algorithm must concern with
 
 ## 17. Linux Kernel Allocators
 - Buddy
-  - ![](2020-04-04-16-16-17.png)
+  - ![](images/2020-04-04-16-16-17.png)
   - start with 2^x area
   - on request
     - subdivide into 2^x chunks and find smallest 2^x chunk that can satisfy request
@@ -275,7 +275,7 @@ Allocation algorithm must concern with
     - check buddy(adjacent chunk) to see if you can aggregate into a large chunk 
     - aggregate more up the tree
 - Slab
-![](2020-04-04-16-46-54.png)
+![](images/2020-04-04-16-46-54.png)
   - 2^x granularity in Buddy
     - internal fragmentation
     - a lot of Linux common data structures are not of a size that's close to a power of two 
@@ -292,7 +292,7 @@ Virtual memory >> Physical memory
   
 demand paging
 - pages swapped in/out of memory and a swap partition (e.g., on disk)
-![](2020-04-04-16-53-16.png)
+![](images/2020-04-04-16-53-16.png)
 - original physical address may not equal to physical address after swap
 - if page is "pinned", the swapping is disabled
   - is useful for instance, CPU is interacting with DMA devices
@@ -347,7 +347,7 @@ On create
 On write
 - page fault and copy
 - pay copy cost only if necessary
-![](2020-04-04-17-15-14.png)
+![](images/2020-04-04-17-15-14.png)
 
 
 ## 22. Fault Management Checkpoint

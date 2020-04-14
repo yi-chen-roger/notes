@@ -27,7 +27,7 @@ Distributed File System
   - replicated vs partitioned, peer-like system ...
 
 ## 3. Distributed File System
-![](2020-04-08-12-58-08.png)
+![](images/2020-04-08-12-58-08.png)
 
 ## 4. DFS Models
 - client/server on different machines <== this chapter focus
@@ -42,14 +42,14 @@ Distributed File System
 ## 5. Remote File Service: Extremes
 - Extreme 1 : Upload/Download
   - like FTP, SVN
-  - ![](2020-04-08-21-12-17.png)
+  - ![](images/2020-04-08-21-12-17.png)
   - Pros:
     - local reads/writes at client
   - Cons: 
     - entire file download/upload even for small access
     - server gives up control (makes some operations related to sharing filing difficult)
 - Extreme 2: True Remote File Access
-  - ![](2020-04-08-21-17-05.png)
+  - ![](images/2020-04-08-21-17-05.png)
   - every access to remote file, nothing done locally
   - Pros:
     - file accesses centralized, easy to reason about consistency
@@ -64,10 +64,10 @@ A more Practical Remote File Access (with Caching)
      - low latency on file operations 
      - server load reduced => is more scalable
 2. Force clients to interact with server(frequently)
-   - Pros
+  - Pros
      - server has insights into what clients are doing
      - server has control into which accesses can be permitted => easier to maintain consistency
-    - Cons
+  - Cons
     - server more complex, requires different file sharing semantics
 
 
@@ -78,7 +78,7 @@ OK with extreme models; but cannot support 'practical' model
   - cannot support caching and consistency management
   - every request self-contained => more bits transferred
 - Pros:
-  - no resources are sued on server side (CPU/Memory)
+  - no resources are used on server side (CPU/Memory)
   - no failure, just restart
 
 Stateful == keeps client state
@@ -98,7 +98,7 @@ needed for 'practical' model to track what is cached/accessed
 - Like cache coherence in SMP
 
 
-![](2020-04-09-01-19-19.png)
+![](images/2020-04-09-01-19-19.png)
 
 - SMP:
   - HOW: write-update/write-invalidate
@@ -117,7 +117,7 @@ Where do you think files or files blocks can be cached in a DFS with a single fi
   - (usefulness will depend on load, request interleaving) 
 
 ## 10. File Sharing Semantic on a DFS
-![](2020-04-09-02-11-26.png)
+![](images/2020-04-09-02-11-26.png)
 
 - UNIX semantics => every write visible immediately
 - Session semantics
@@ -191,7 +191,7 @@ Replicated DFS: 0%
 Partitioned DFS: 33%
 
 ## 15. Network file system - NFS
-![](2020-04-09-12-18-39.png)
+![](images/2020-04-09-12-18-39.png)
 
 ## 16. NFS File Handle Quiz:
 
@@ -271,7 +271,7 @@ R1 .... Rn readers, W1 writer
 - server contacts last writer for dirty blocks
 - since W2 hasn't closed => disable caching!
 
-![](2020-04-09-16-23-51.png)
+![](images/2020-04-09-16-23-51.png)
 
 
 
