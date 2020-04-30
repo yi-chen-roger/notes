@@ -65,3 +65,14 @@ Lisp Books
 - Lisp in Small Pieces (Compiler)
 - On Lisp
 - ANSI common Lisp
+
+
+## What did PAIP Accomplish?
+- an advanced Lisp text, PAIP stands up very well. 
+    - For macros, Paul Graham's books have done an especially excellent job.
+- As an AI programming text, PAIP does well.
+    - [Building Problem Solvers (Artificial Intelligence) ](https://www.amazon.com/Building-Problem-Solvers-Artificial-Intelligence/dp/0262061570 
+        - concentrating on inference system
+    - [Artificial Intelligence Programming] (https://www.amazon.com/Artificial-Intelligence-Programming-Eugene-Charniak-ebook/dp/B00HZLXGG2)
+- As an AI text, PAIP does not fare as well
+    - Artificial Intelligence: A Modern Approach

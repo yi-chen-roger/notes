@@ -1,11 +1,11 @@
-# IPC
+# P3L3  IPC
 
-## Lesson Preview
+## 1. Lesson Preview
 Inter-Process communications
 - IPC
 - Shared Memory IPC
 
-## Visual Metaphor
+## 2. Visual Metaphor
 IPC is like...   working together in the toy shop
 
 
@@ -17,7 +17,7 @@ Processes share memory| workers share work area
 Process exchange message (via sockets...) | works call each other
 Requires synchronization (mutexes, waiting)|Requires synchronization
 
-## Inter-Process Communications (IPC)
+## 3. Inter-Process Communications (IPC)
 IPC == OS-supported mechanisms for interaction among processes (coordination &communication)
 - message passing
   - e.g, sockets, pipes, message queues
@@ -27,30 +27,30 @@ IPC == OS-supported mechanisms for interaction among processes (coordination &co
   - files, RPC
 - synchronization primitives
 
-## message-passing
+## 4. message-passing
+![](images/2020-04-29-16-10-10.png)
 send/recv of messages
-
-os creates and maintains a channel
-- buffer, FIFO queue..
-
-os provides interface to processes - a port
-- processes send/write messages to a port
-- processes recv/read messages from a port
+- os creates and maintains a channel
+  - buffer, FIFO queue..
+- os provides interface to processes - a port
+  - processes send/write messages to a port
+  - processes recv/read messages from a port
 
 kernel required to 
 - establish communication
 - perform each IPC op
 - send: system call + data copy
 - recv: system call + data copy
-
+- request-response: 4x user/kernel crossings + 4x data copies
 
 cons:
 - overheads
   - request-response: 4x user/kernel crossings + 4x data copies
 pros:
-- simplicity: kernel does channel management and synchronization
+- simplicity
+  - kernel does channel management and synchronization
 
-## Forms of Message Passing
+## 5. Forms of Message Passing
 Pipes (POSIX stand)
 - carry byte stream between 2 processes
 - e.g. connect output from one process to input of another
@@ -64,11 +64,11 @@ Message Queues
 Sockets (a kind of message passing API)
 - send(), recv() == passing message buffers
 - socket() -- create kernel-level socket buffer
-- associate nece ssary kernel-level processing (TCP/IP, ...)
+- associate necessary kernel-level processing (TCP/IP, ...)
   - if different machines, channel between process and network device
   - if same machine, bypass full protocol stack.
 
-## Shared Memory IPC
+## 6.Shared Memory IPC
 read and write to shared memory region
 - OS established shared channel between the processes
     1. physical pages mapped into virtual address space
@@ -76,35 +76,52 @@ read and write to shared memory region
     3. VA(P1) != VA(P2)
     4. physical memory doesn't need to be contiguous
 - APIs: 
-  - SysV and POSIX API
+  - SysV API
+  - POSIX API
   - memory mapped file
   - Andriod ashmem 
 
 Pro:
 - system calls only for setup data copies potentially reduced (but not eliminated)
+
 Cons:
 - explicit synchronization
 - communication protocol, shared buffer management ... is programmer responsibility
-  
-## Copy(message) vs. Map (shared Memory)
-Goal: transfer data from one into target address space
+## 7. IPC Comparison Quiz
+Considering using IPC to communicate between processes. You can either use a message-passing or a memory-based API. Which do you think will perform better
+- message-passing?
+- Shared memory?
+- neither, it depends <== correct
 
+Answer
+
+- message-passing? <== must perform multiple copies
+- Shared memory?  <== must establish all mapping among processes' address spaces and shared memory pages
+- neither, it depends <== correct
+
+
+## 8. Copy(message) vs. Map (shared Memory)
+Goal: transfer data from one into target address space
 Copy:
   - CPU cycles to copy data to/from port
 
 Map:
   - CPU cycles to map memory into address space
   - CPU to copy data to channel (no user/kernel switches)
-  - if set up once use many times -> good payoff
-  - can perform well for 1-time use
-    - large data : t(copy) >> t(map)
-e.g, tradeoff exercised in Windows "Local" Procedural Call (LPC)
-
-## SysV Shared Memory
-- "segments" of shared memory => not necessarily contiguous physical pages
-- shared memory is system-wide => system limits on number of segments and total size
 
 
+large data: t(copy) >> t(map)
+  - set up once use many times -> good payoff
+  - Shared memory can perform well for 1-time use
+    - e.g, tradeoff exercised in Windows "Local" Procedural Call (LPC)
+
+## 9. SysV Shared Memory
+- "segments" of shared memory 
+  - not necessarily contiguous physical pages
+- shared memory is system-wide 
+  - system limits on number of segments and total size
+
+### SysV Shared Memory Overview
 1. Create 
    - OS assigns unique key
 2. Attach 
@@ -114,36 +131,35 @@ e.g, tradeoff exercised in Windows "Local" Procedural Call (LPC)
 4. destroy
    - only remove when explicitly deleted (or reboot)
 
-## SysV shared Memory API
+## 10. SysV shared Memory API
 1. Create
-    ```
-    shmget(shmid, size, flag) //create or open
-    ftok(pathname, prg_id) // same args => same key
-    ```
+    - `shmget(shmid, size, flag)`
+      - create or open
+    - `ftok(pathname, prg_id)`
+      - same args => same key
 2. Attach
-   ```
-   shmat(shmid, addr, flags)
-   ```
-   - you can pass addr
-   - if address = null => OS will assign arbitrary memory
-    - cast return addr to arbitrary type
-3. Detach `shmdt(shmid)`
-4. Destroy `shmctl(shmid, cmd, buf)`
-   - destroy with replace `cmd` with `IPC_RMID` 
+   - `shmat(shmid, addr, flags)`
+      - address = null => arbitrary
+      - cast return addr to arbitrary type
+3. Detach 
+  - `shmdt(shmid)`
+4. Destroy 
+  - `shmctl(shmid, cmd, buf)`
+      - destroy with replace `cmd` with `IPC_RMID` 
 
-## POSIX shared Memory API
+## 11. POSIX shared Memory API
 use file instead of segment, file descriptor instead of key 
-1. shm_open()
+1. `shm_open()`
    -  returns file descriptor
    -  in "tmpfs"
-2. mmap() and ummap()
+2. `mmap(`) and `ummap()`
    - mapping virtual => physical addresses
-3. shm_close()
-4. shm_unlink()
+3. `shm_close()`
+4. `shm_unlink()`
 
 [POSIX Shared Memory API](http://man7.org/linux/man-pages/man7/shm_overview.7.html)
 
-## Shared memory and Synchronization
+## 12. Shared memory and Synchronization
 "like threads shared stat in a single address space ... but for processes"
 
 Synchronization method
@@ -151,14 +167,13 @@ Synchronization method
 2. OS-supported IPC for synchronization
    
 Either method must coordinate...
-- number of concurrent accesses to shared segment (like mutex)
-- when data is available and ready for consumption (like conditional variable)
+- number of concurrent accesses to shared segment <= mutex
+- when data is available and ready for consumption <= condition
 
-## Pthreads Sync for IPC
+## 13. Pthreads Sync for IPC
 
-`phtread_mutexattr_t`, `pthread_condattr_t` is `PTHREAD_PROCESS_SHARED`
-
-synchronization data structures self must be shared
+- assign `phtread_mutexattr_t`, `pthread_condattr_t` to `PTHREAD_PROCESS_SHARED`
+-  synchronization data structures self must be shared
 
 ```
 typedef struct {
@@ -178,7 +193,7 @@ pthread_mutex_init(&shm_prt.mutex, &m_attr);
 
 ```
 
-## Other IPC Sync
+## 14. Other IPC Sync
 message Queues
 - implement "mutual exclusion" via send/recv
 - example protocol:
@@ -197,25 +212,25 @@ IPC Resources
 - [shm_overview man page](http://man7.org/linux/man-pages/man7/shm_overview.7.html) overview of POSIX shared memory
 
 
-## Message Queue Quiz
+## 15. Message Queue Quiz
 for message queues what are the linux system calls that are used for ...
 - `msgsnd` send message to a message queue
 - `msgrcv` receive message to a message queue
 - `msgctl` perform a message control operation
 - `msgget` get a message identifier
 
-## IPC command line tools
+## 16. IPC command line tools
 - `ipcs` == list all IPC facilities (including all kinds of IPC, message queues, semaphores)
   - `-m` displays info on shared memory only
 - `ipcrm` == delete IPC facilities
   - `-m [shmid]` deletes shm segment with given id
 
-## Shared Memory Design Consideration
+## 17. Shared Memory Design Consideration
 - different APIs/ mechanism for synchronization
 - os provides shared memory, and is out of the way
 - data passing /sync protocols are up to the programmer 
 
-## Shared Mem Design Considerations
+## 18. Shared Mem Design Considerations
 
 How many segments?
 - 1 large segment 
@@ -224,13 +239,16 @@ How many segments?
   - use pool of segments, queue of segment ids
   - communication segment IDS among processes
 
-## Design Consideration
+## 19. Design Consideration
 what size segments? what if data doesn't fit?
-
-segment size == data size 
--  works for well-know static sizes limits max data size
-
-segment size < message size
-- transfer data in rounds;
-  include protocol to track progress
 ![](images/2020-03-22-23-34-50.png)
+- segment size == data size 
+  -  works for well-know static sizes limits max data size
+- segment size < message size
+  - transfer data in rounds;
+  - include protocol to track progress
+
+## 20. Lesson Summary
+Inter-Process Communications
+- IPC using pipes, messages(ports), and shared memory
+- Memory-based vs. message-based IPC

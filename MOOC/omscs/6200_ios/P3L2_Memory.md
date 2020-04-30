@@ -1,4 +1,4 @@
-#Memory Management
+# P3L2 Memory Management
 
 ## 1. Preview
 - Physical and virtual memory management
@@ -46,7 +46,7 @@ Virtual ==> Physical
 MMU (memory management unit) (in CPU package)
 - translate virtual to physical addresses
 - reports faults: illegal access(not allocated), permission, not  present in memory (in disk)
-- 
+
 Registers
 - pointers to page table (page based)
 - base and limit size, number of segments... (segment based)
@@ -56,6 +56,7 @@ TLB Cache - Translation look aside buffer
 
 Translation
 - actual Physical generate done in hardware
+  - hardware dictate what type of memory management modes are supported. (Paging vs Segments or Both)
 - OS maintain the required information for translation such as page table
 
 ## 5. Page Tables
@@ -80,23 +81,37 @@ Page Table
     - e.g. CR3 on x86
 
 ## 6. Page Table Entry
+### Page Table Entry
 ![](images/2020-03-29-17-53-09.png)
 Flags:
 - P - Present(valid/invalid)
 - D - Dirty(written to)
 - A - Accessed(for read or write)
 - (R W X) - protection bits
+### Page Table Entry on x86
+![](images/2020-04-29-15-23-23.png)
+Flag:
+ - Present
+ - Dirty
+ - Accessed
+ - R/W => permission bit
+    - 0 -> R only; 1 -> R/W
+ - U/S => permission bit
+    - 0 -> usermode; 1 -> supervisor mode only
+ - Others: caching related info(write through, caching disabled ...)
+ - Unused: for future use
 
-Page fault
-MMU
-- generate Physical address and access
-- generate error code on kernel stack => trap into kernel
-  - page fault handler == determines action based on error code and faulting address
+### Page fault
+
+- MMU
+  - generate Physical address and access
+  - generate error code on kernel stack => trap into kernel
+- page fault handler == determines action based on error code and faulting address
     - bring page from disk to memory
     - protection error (SIGSEGV)
-  - on x86
-    - error code from page table entry flags
-    - faulting address in CR2
+    - on x86
+      - error code from page table entry flags
+      - faulting address in CR2
 
 ## 7. Page Table Size
 ### 32 - bit architecture
@@ -113,12 +128,9 @@ MMU
 
 - 2^32 / 2^12 * 4B  = 4MB per process
 
-
-
 ### 64 - bit architecture
 - Page table entry (PTE)
   - 8bytes, including PFN + flags
-
 
 - Virtual page Number(VPN)
   - 2^64 / Page Size
@@ -143,10 +155,9 @@ Hierarchical Page Table
   - page table directory
 - internal page table == only for valid memory regions
 - on `malloc` a new internal page table may be allocated
-
-![](images/2020-03-29-20-20-40.png)
 - inner table address => 2^10 * page size = 2^ 10 * 2^ 10 = 1MB (每个inner table可以表示1MB)
 - don't need an inner table for each 1MB virtual memory gap
+![](images/2020-03-29-20-20-40.png)
 
 
 Additional Layer
@@ -167,8 +178,8 @@ multi-level page table Tradeoffs
 ## 9. Quiz
 A process with 12 bit addresses has an address space where only the first 2 kb and last 1kb are allocated and used.
 
-How many total entires are there in a single-level page table that uses the first address format? 64
-How many total entires are needed in the inner page tables of the 2-level page table when the second format is uses?
+How many total entires are there in a single-level page table that uses the first address format? A: 64
+How many total entires are needed in the inner page tables of the 2-level page table when the second format is uses? A: 48
 
 ![](images/2020-03-29-21-27-13.png)
 
@@ -197,11 +208,15 @@ x86 Core i7
 - per core: 
   - 64-entry data TLB
   - 128-entry instruction TLB
--512-entry shared second-level TLB
+- 512-entry shared second-level TLB
 
 
 ## 11. Inverted Page Tables
+另一种完全不一样的方法
+### Inverted Page Table
 ![](images/2020-03-29-22-45-11.png)
+根据逻辑地址,现行找physical地址
+###  Hashing Page Tables
 ![](images/2020-03-29-22-45-55.png)
 1. 根据pid算hash
 2. 找到linked list
@@ -236,8 +251,13 @@ offer bit  | 21 bits | 30 bits
 reduction factor(on page table size)  | *512 | * 1024
 
 Larger pages:
-Pros: fewer page table entries, smaller page tables, more tlb hits...
-Cons: internal fragmentation => wastes memory
+- Pros: 
+  - fewer page table entries
+  - smaller page tables
+  - more tlb hits...
+- Cons: 
+  - internal fragmentation 
+  - wastes memory
 
 ##14. Page Table Size QUIZ
 on a 12-bit architecture what are the number if entries in the page table if the page size is 32 bytes? 
@@ -250,7 +270,8 @@ How about 512 bytes?
 memory allocator
 - determines VA to PA mapping
 - kernel-level allocators
-  - kernel state, static process state
+  - kernel state
+  - static process state (process 动态创建,回收)
 - User-level allocators
   - dynamic process state(heap); malloc/free
   - e.g. dlmalloc, jemalloc, horad, tcmalloc
@@ -265,22 +286,28 @@ Allocation algorithm must concern with
 - to permit quick coalescing/aggregation of free areas
 
 ## 17. Linux Kernel Allocators
+### Allocators in the Linux Kernel
 - Buddy
+- Slab
+### Buddy
   - ![](images/2020-04-04-16-16-17.png)
   - start with 2^x area
   - on request
     - subdivide into 2^x chunks and find smallest 2^x chunk that can satisfy request
-  - fragmentation still there but we can aggregate them quickly
+    - fragmentation still there but we can aggregate them quickly
   - on free
     - check buddy(adjacent chunk) to see if you can aggregate into a large chunk 
     - aggregate more up the tree
-- Slab
+    - aggregation works well and fast
+### Slab
 ![](images/2020-04-04-16-46-54.png)
-  - 2^x granularity in Buddy
-    - internal fragmentation
+##### Problem of Buddy
+- 2^x granularity in Buddy
+  - internal fragmentation
     - a lot of Linux common data structures are not of a size that's close to a power of two 
-    - Slab to rescue
-  - caches for common object types/sizes, on top of contiguous memory
+  - Slab to rescue!
+##### Slab allocator
+- caches for common object types/sizes, on top of contiguous memory
   - Pros: 
     - internal fragmentation avoided
     - external fragmentation is not an issue
@@ -290,7 +317,7 @@ Virtual memory >> Physical memory
 - virtual memory page not always in physical memory
 - physical page frame saved and restored to/from secondary storage
   
-demand paging
+Demand paging
 - pages swapped in/out of memory and a swap partition (e.g., on disk)
 ![](images/2020-04-04-16-53-16.png)
 - original physical address may not equal to physical address after swap
@@ -300,24 +327,26 @@ demand paging
 
 ## 19. Page Replacement
 When should pages be swapped out?
-- page(out) daemon
 - when memory usage is above threshold (high watermark)
 - when cpu usage is below threshold (low watermark)
+- os runs page(out) daemon
 
 Which pages should be swapped out?
 - pages that won't be used
 - history-based prediction
   - Least-recently Used (LRU policy)
+  - Access bit to track if page is referenced
 - pages that don't need to be written out
   - Dirty bit to track if modified
 - avoid non-swappable pages
 
 ### Freeing up Physical memory
 In Linux, 
-- parameters to tune thresholds: target page count ...
+- provides parameters to tune thresholds: E.g. target page count ...
 - categorize pages into different types
   - e.g. claimable, swappable ...
-- 'second chance' => a variation of LRU
+- The default replacement algorithm is a variation of LRU
+  - gives a 'second chance'
 
 ## 20. LRU Quiz
 Suppose you have an array with 11 page-sized entries that are accessed one-by-one in a loop
@@ -329,7 +358,7 @@ What is the percentage of pages that will need to be demand pages using the LRU 
 ## 21 Copy on Write
 MMU hardware
 - perform translation, track access, enforce protection
-- useful to build other services and optimizations
+- also useful to build other services and optimizations
   - E.g. Copy-on-write
   - Check pointing
 
@@ -344,9 +373,9 @@ On create
 - write protect original page
 - if only read
   - save memory and time to copy
-On write
-- page fault and copy
-- pay copy cost only if necessary
+- if on write
+  - page fault and copy
+  - pay copy cost only if necessary
 ![](images/2020-04-04-17-15-14.png)
 
 
@@ -365,7 +394,7 @@ Better Approach
 - copy diffs of "dirtied" pages for incremental checkpoints
   - rebuild from multiple diffs, or in background
 
-From Checkpoints to ....
+### From Checkpoints to ....
 Debugging
 - Rewind - Replay
 - rewind == restart from checkpoint
@@ -378,5 +407,17 @@ Migration
   -  repeated checkpoints in a fast loop until pause-and-copy becomes acceptable (or unavoidable)
 
 
+## 23. Checkpointing Quiz
+Which is correct
+"The more frequently you checkpoint ..."
+- the more state you will checkpoint
+- the higher the overheads of the checkpointing process
+- the faster you will be able to recover from a fault
+- all of the above <==== Correct
 
 
+
+## 24. Lesson Summary
+- Virtual memory abstracts a process's view of physical memory
+- Pages and segments
+- Allocation and replacement strategies and checkpointing

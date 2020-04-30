@@ -41,11 +41,14 @@ Servers
 Each node
 - "owns" state
 - provides service
-=> all nodes are "peers"
 
+
+### all nodes are "peers"
 
 Examples: bit data analytics, web searches, content sharing, or distributed shared memory(DSM)
-"Peer" 打引号是因为
+
+
+这里 "Peer" 打引号是因为
 - May have some control & management nodes
 - in a real "peer-to-peer" system even overall control & management done by all)
 
@@ -63,14 +66,14 @@ Each node
 
 
 ## 6. Hardware vs Software DSM
-Hardware-supported
-- relies on interconnect
-- OS manages large physical memory
-- NICs translate remote memory accesses to message
-- NICs involved in all aspects of memory management, support atomics
-Software-supported
-- everything done by software
-- OS, or language runtime
+- Hardware-supported
+  - relies on interconnect
+  - OS manages large physical memory
+  - NICs translate remote memory accesses to message
+  - NICs involved in all aspects of memory management, support atomics
+- Software-supported
+  - everything done by software
+  - OS, or language runtime
 
 
 ## 7. Implementing DSM Quiz
@@ -83,9 +86,8 @@ According to the paper [Distributed Shared Memory: Concepts and Systems](https:/
 Hint: Start reading at heading (page 76 of paper)
 
 ## 8 DSM Design: Sharing Granularity
-- cache line granularity?
-  - overheads too high for DSM
-- variable granularity X still hight overheads
+- ~~cache line granularity?~~ <= overheads too high for DSM 
+- ~~variable granularity~~  <= still hight overheads
 - page granularity  <= (OS-level)
 - object granularity <= (language runtime)
 
@@ -131,17 +133,15 @@ in DSM
 - coherence operations triggered on each write => overhead too high
 
 
-Push invalidation when data is written to
-- proactive
-- eager
-- pessimistic
-
-Pull modification info periodically
-- on-demand(reactive)
-- lazy
-- optimistic
-
-=> when these methods get triggered depends on the consistency model for the shared state!
+- Push invalidation when data is written to
+  - proactive
+  - eager
+  - pessimistic
+- Pull modification info periodically
+  - on-demand(reactive)
+  - lazy
+  - optimistic
+- when these methods get triggered depends on the consistency model for the shared state!
 
 ## 13. DSM Architecture (page-based, OS-supported)
 
@@ -160,6 +160,7 @@ page-based DSM architecture
 - home node manages accesses and tracks page ownership
   - keeps state: pages accessed, modificiations, caching enabled/disabled, locked
   - current "owner" (owner may not equal home node)
+  - owner负责维护状态,home负责track 谁是owner
 - Explicit replicas
     - for load balancing performance, or reliability
     - "home"/manager node controls management
@@ -172,20 +173,22 @@ page-based DSM architecture
 - explicit replication possible for load balancing, performance or reliability
 
 ## 15. Indexing Distributed State
-Each page(object) has ...
-- address == node ID + page frame number
-- node ID == "home" node
+### DSM metadata
+  - Each page(object) has ...
+    - address == node ID + page frame number
+    - node ID == "home" node
+  - Global map (replicated)
+    - object (page) id => manager node id
+    - manager map available on each node!
+  - metadata for local pages (partitioned)
+    - per-page metadata is distributed across manager
 
-Global map (replicated)
-- object (page) id => manager node id
-- manager map available on each node!
+基本上就是通过node ID找到manager在读取page的metadata
 
-metadata for local pages (partitioned)
-- per-page metadata is distributed across manager
-Global managing table 
+上面是 fixed manager的办法, 如果要dynamic
+- Global managing table 
+  - object id => index into mapping table => manager node
 
-Global mapping table
-object id => index into mapping table => manager node
 
 ## 16. Implementing DSM
 Problem: DSM must "intercept" accesses to DSM state
@@ -202,20 +205,14 @@ Solution: Use Hardware MMU support!
 - cached content => trap and pass to DSM to perform necessary coherence operations (修改被别人cache的值,会出trap)
 - Other MMU information useful (e.g, dirty page) 
 
-17. What is a Consistency Model?
-Consistency Model == agreement between memory(state) and upper software layers
+## 17. What is a Consistency Model?
+Consistency Model 
+- agreement between memory(state) and upper software layers
+- "memory behaves correctly if and only if software follows specific rules"
+  - memory(state) guarantees to behave correctly
+    - access ordering
+    - propagation/ visibility of updates
 
-"memory behaves correctly if and only if software follows specific rules"
-
-memory(state) guarantees to behave correctly
-Notation:
-
-- access ordering
-- propagation/visibility of updates
-![](images/2020-04-23-22-25-20.png)
-
-- `R_m1(x)` == x was read from memory location m1
-- `W_m1(y)` == y was written to memory location m1
 
 ## 18. Strict Consistency
 Strict consistency == updates visible everywhere immediately, and the order is guaranteed

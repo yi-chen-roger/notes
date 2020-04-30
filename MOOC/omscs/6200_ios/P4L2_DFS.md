@@ -117,8 +117,6 @@ Where do you think files or files blocks can be cached in a DFS with a single fi
   - (usefulness will depend on load, request interleaving) 
 
 ## 10. File Sharing Semantic on a DFS
-![](images/2020-04-09-02-11-26.png)
-
 - UNIX semantics => every write visible immediately
 - Session semantics
   - between open-close => session

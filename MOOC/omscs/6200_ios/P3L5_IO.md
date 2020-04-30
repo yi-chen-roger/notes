@@ -1,4 +1,4 @@
-# IO
+# P3L5 IO
 
 ## 1. Lesson Preview
 
@@ -63,15 +63,16 @@ Device Drivers
   - device diversity
 
 ## 8. Types of Devices
-Block: disk
-- read/write blocks of data
-- direct access to arbitrary block
-Character : keyboard
-- get/put character
-Network devices
-- stream
+- Block: disk
+  - read/write blocks of data
+  - direct access to arbitrary block
+- Character : keyboard
+  - get/put character
+- Network devices
+  - stream
 
 OS representation of a device == special device file
+
 UNIX-like systems
 - /dev
 - tmpfs
@@ -97,7 +98,7 @@ Linux supports a number of pseudo ("virtual") devices that provide special funct
 Run the command `ls -la /dev` in a linux environment. What are the some of the device names you see?
 Enter at least five device names
  
-- had
+- hda
 - sda
 - tty
 - null
@@ -109,17 +110,16 @@ Enter at least five device names
 - autoconf
 
 ## 12.CPU-Device Interactions
-### CPU-Device Interactions
-![](images/2020-04-05-20-36-07.png)
+### CPU-Device CPU to Device
+### Path from Device to CPU
+
 access device register == memory load/store
-
-memory-mapped I/O
-- Part of 'host' physical memory dedicated for device interactions
-- Base Address Register(BAR)
-
-I/O port
-- dedicated in/out instructions for device access
-- target device (I/O port) and value in register
+- memory-mapped I/O
+  - Part of 'host' physical memory dedicated for device interactions
+  - Base Address Register(BAR)
+- I/O port model
+  - dedicated in/out instructions for device access
+  - target device (I/O port) and value in register
 
 ### Path from Device to CPU
 - Interrupt
@@ -133,13 +133,15 @@ Cons: delay or CPU overhead
 ### Programmed I/O(PIO)
 
 no additional hardware support
+
 CPU "programs" the device
 - via command registers
 - data movement
 
+### Example: NIC, data == network packet
+
 ![](images/2020-04-05-20-36-41.png)
 
-Example: NIC, data == network packet
 - write command to request packet transmission
 - copy packet to data registers
 - repeat until packet sent
@@ -151,6 +153,7 @@ e.g., 1500 B packet; 8 byte regs or bus
 ## 14. Device Access DMA
 ### Direct Memory Access
 relies on DMA controller
+
 CPU "programs" the device
 - via command register
 - via DMA controls
@@ -168,14 +171,28 @@ For DMAs:
 - data buffer must be in physical memory until transfer completes
 - pinning regions (non-swappable)
 
+
+## 15. DMA vs. PIO Quiz
+For a hypothetical system, assume the following:
+- it costs 1 cycle to run a store instruction to a device register
+- it costs5 cycle to configure a DMA controller
+- te PCI-bus i 8 bytes wide
+- all devices support both DMA and PIO access
+
+which device access method is best for the following devices?
+- keyboard <== PIO
+- NIC <== Depends
+
 ## 16. Typical Device Access
 ![](images/2020-04-05-20-53-33.png)
 
 ## 17. OS Bypass
-### Do you Have to Go Through the OS  
+
+Do you Have to Go Through the OS ?
+
 OS Bypass
 - device regs/data directly accessible
-- Os configures the memory mapping then out-of-the-way
+- OS configures the memory mapping then out-of-the-way
 - "user-level driver" (~ library)
 - OS retains coarse-grain control
 - relies on device features
@@ -185,28 +202,33 @@ OS Bypass
 
 ## 18. Sync vs. Async Access
 ### what happens to a calling thread?
-Synchronous I/O operations
-- process blocks
-  - in the wait queue
-Asynchronous I/O operations
-- process continues
-- Later... process checks and retrieves result
-- Or process is notified that the operation completed and results are ready
 ![](images/2020-04-06-00-44-41.png)
+
+- Synchronous I/O operations
+  - process blocks in the wait queue
+- Asynchronous I/O operations
+  - process continues
+  - Later... 
+    - process checks and retrieves result
+    - Or process is notified that the operation completed and results are ready
 
 
 ## 19. Block Device Stack
-process use files => logical storage unit
-kernel file system(FS)
+
+Block Device Stack
+- processes use files
+  - logical storage unit
+- kernel file system(FS)
   - where, how to find and access file
   - OS specifies interface 
-generic block layer
+- generic block layer
   - OS standardized block interface
-device driver
+- device driver
 ![](images/2020-04-06-00-49-58.png)
 
 ## 20. Block Device Quiz
 in linux, the `ioctl()` command can be used to manipulate devices. Complete the code snippet, using `ioctl` to determine the size of a blockdevice
+
 ```C
 int fd;
 unsigned long numblocks = 0;
@@ -257,28 +279,30 @@ inodes == index of all disk blocks corresponding to a file
 - inode => list of all blocks + other metadata
 ![](images/2020-04-06-01-50-10.png)
 
-Pro:
-- easy to perform sequential and random access
-Cons:
-- limited on file size
-  - 128 byte inode,4 byte block pointer
-  - 32 addressible blocks, * 1kb block
+- Pro:
+  - easy to perform sequential and random access
+- Cons:
+  - limited on file size
+
+e.g. 128 byte inode,4 byte block pointer
+  - 32 addressable blocks, * 1kb block
   - 32 kb file size
 
 ## 26. inodes with Indirect Pointers
 - 128 byte inode,4 byte block pointer
 - Direct pointer "pointers to data block"
   - 1kb per entry
-- Indirect pointer " a block of pointers"
+- Indirect pointer "a block of pointers"
   - 256kb per entry
-- Double Indirect point
+- Double Indirect point "a block of block of pointers"
   - 64mb
 ![](images/2020-04-06-01-59-16.png)
-Pro: 
-- small inode =>  large file size
-Cons:
-- file access slowdown
-- e.g.
+- Pro: 
+  - small inode =>  large file size
+- Cons:
+  - file access slowdown
+
+e.g.    
   - direct ptr => 2 disk accesses
   - double indirect ptr => up to 4 disk accesses 
 
@@ -308,4 +332,9 @@ What is the maximum file size if a block on disk is 8kb
 - journaling / logging => reduce random access(ext3, ext4)
   - "describe" write in log: block, offer, value...
   - periodically apply updates to proper disk location
-  - 
+
+## 29. Lesson Summary
+I/O Management
+- Supporting I/O devices
+- Analyzed stack of block-based storage devices
+- Architecture of file systems

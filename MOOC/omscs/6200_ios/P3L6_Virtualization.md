@@ -1,4 +1,4 @@
-# Virtualization
+# P3L6 Virtualization
 
 ## 1. Lesson Preview
 
@@ -32,7 +32,9 @@ Based on the classical definition of virtualization by Popek & Goldberg, which o
 - JVM
 - Virtual GameBoy
 
-## 5. Why do care about Virtualization?
+## 5. Benefits of Virtualization
+
+Why do care about Virtualization?
 
 - Consolidation
   - decrease cost, improve manageability
@@ -42,7 +44,7 @@ Based on the classical definition of virtualization by Popek & Goldberg, which o
 - debugging
 - support for legacy OSs
 
-## 6. Benefits of Virtualization
+## 6. Benefits of Virtualization Quiz 1
 
 If virtualization has been around since the 60's, why has it not been used ubiquitously since that time?
 
@@ -51,7 +53,7 @@ If virtualization has been around since the 60's, why has it not been used ubiqu
 - mainframes were not ubiquitous <==
 - other hardware was cheap <==
 
-## 7. Benefits of Virtualization
+## 7. Benefits of Virtualization Quiz 2
 
 If virtualization was not widely adopted in the past, what changed? Why did we start to care about virtualization?
 
@@ -90,7 +92,9 @@ Bare-metal==hypervisor-based
 - host OS owns all hardware
 - special VMM module provides hardware interface to VMs and deals with VM context switching
   ![](images/2020-04-07-03-15-02.png)
-  Example: KVM (kernel-based VM)
+
+
+### Example: KVM (kernel-based VM)
 - based on Linux
 - KVM kernel module + QEMU for hardware virtualization
 - leverages Linux open-source community
@@ -104,7 +108,8 @@ Bare Metal
 - VMware ESX
 - Citrix XenServer
 - microsoft Hpyer-V
-  Hosted
+
+Hosted
 - KVM
 - Fusion
 - Virtual Box
@@ -113,7 +118,7 @@ Bare Metal
 ## 11. Virtualization Requirements Quiz
 
 Which of the following do you think are virtualization requirements
-
+全选
 - present virtual platform interface to VMs <== virtualize CPU, memory, devices
 - provide isolation access VMs <== preemption, MMU for addr translation & validation
 - protect guest OS from apps <== cannot run guest OS & apps at same protection level
@@ -128,13 +133,13 @@ e.g., x86 has 4 protection levels(rings)
 - ring 3: lowest privilege (apps)
 - ring 0: highest privilege (OS)
 
-a way to run virtualization is
+A way to run virtualization is
 
 - ring 3: apps
 - ring 1: OS
 - ring 0: hypervisor
 
-more recent
+### more recent
 x86 has 4 protection levels(rings) and 2 protection modes(root & non-root)
 
 - non- root: VMs
@@ -143,7 +148,6 @@ x86 has 4 protection levels(rings) and 2 protection modes(root & non-root)
 - root:
   - ring 0: hypervisor
 
-![](images/2020-04-07-12-05-34.png)
 
 ## 13. Processor Virtualization (Trap-and-Emulate)
 
@@ -171,19 +175,22 @@ x86 Pre 2005
     - guest VM could not find out what is the state of the interrupts enabled/disabled bit
 
 ## 16. Binary Translation
+### Binary Translation
 
 A solution is binary translation
-
 - main idea: rewrite the VM binary to never issue thos 17 instructions
 - Pioneered by Mendel Rosenblum's group at Stanford, commercialized as VMWare
   - Rosenblum awarded ACM Fellow for "reinventing virtualization"
 
-Binary Translation: - goal: full virtualization == guest OS not modified - approach: dynamic binary translation (动态的, 因为机器环境有可能不同)
-
-1. Inspect code blocks to be executed
-2. If needed, translate to alternate instruction sequence
-   - e.g. to emulate desired behavior, possibly even avoiding trap
-3. Otherwise, run at hardware speeds
+Binary Translation: 
+- goal: full virtualization == guest OS not modified
+- approach: dynamic binary translation 
+   - 动态而非静态转换, 是因为实际运行的时候可能依赖一些机器特定的变量
+- Steps
+  1. Inspect code blocks to be executed
+  2. If needed, translate to alternate instruction sequence
+      - e.g. to emulate desired behavior, possibly even avoiding trap
+  3. Otherwise, run at hardware speeds
 
 To speed up
 
@@ -193,12 +200,12 @@ To speed up
 ## 17. Paravirtualization
 
 goal: performance; give up on unmodified guests
-approach: paravirtualization == modify guest
+approach: paravirtualization == modify guest OS
 so that...
 
 - it knows it's running virtualized
-- it makes explicit calls to the hypervisor(hypercalls)
-- hypercall (~system calls)
+- it makes explicit calls to the hypervisor (hypercalls)
+- hypercall (is similar to system calls)
   - package context info
   - specify desired hypercall
   - trap to VMM
@@ -230,7 +237,8 @@ option 2:
 - guest page tables: VA => PA
 - hypervisor shadow Page Table: VA => MA
 - hypervisor maintain consistence
-  - e.g. invalidate on context switch, write-protect guest Page table to track new mappings...
+  - e.g. invalidate on context switch
+  - write-protect guest Page table to track new mappings...
 
 ## 20. Memory Virtualization Paravirtualized
 
@@ -247,25 +255,23 @@ Both Binary and Paravirtualized
 
 ## 21. Device Virtualization
 
-For CPus and memory...
-
-- less diversity, ISA-level 'standardization' of interface
-  For devices...
-- high diversity
-- lock of standard specification of device interface and behavior
-  => 3 key models for device virtualization
+- For CPus and memory...
+  - less diversity, ISA-level 'standardization' of interface
+- For devices...
+  - high diversity
+  - lack of standard specification of device interface and behavior
+- 3 key models for device virtualization
 
 ## 22. Passthrough Model
 
 Approach: VMM-level driver configures device access permissions
-Pros:
-
-- VM provided with exclusive access to the device
-- VM can directly access the device (VMM- bypass)
-  Cons:
-- device sharing difficult
-- VMM must have exact type of device as what VM expects
-- VM migration tricky
+- Pros:
+  - VM provided with exclusive access to the device
+  - VM can directly access the device (VMM- bypass)
+- Cons:
+  - device sharing difficult
+  - VMM must have exact type of device as what VM expects
+  - VM migration tricky
   ![](images/2020-04-07-20-38-37.png)
 
 ## 23. Hypervisor Direct Model
@@ -276,26 +282,27 @@ Approach: VMM intercepts all device access
   - translate to generic I/O operation
   - traverse VMM-resident I/O stack
   - invoke VMM-resident driver
-    Pros:
-- VM decoupled from physical
-- sharing, migration, dealing with device specifics
-  Cons:
-- latency of device operations
-- device driver ecosystem complexities in hypervisor
+- Pros:
+  - VM decoupled from physical
+  - sharing, migration, dealing with device specifics
+- Cons:
+  - latency of device operations
+  - device driver ecosystem complexities in hypervisor
   ![](images/2020-04-07-20-43-10.png)
 
 ## 24. Split Direct Model
 
 Approach: device access control split between
-
 - front-end driver in guest VM(device API)
 - back-end driver in service VM(or host)
 - modified guest driver
   - i.e., limited to paravirtualization guests
-    Pros:
-- eliminate emulation overhead
-- allow for better management of shared devices
-  ![](images/2020-04-07-20-48-27.png)
+
+-Pros:
+  - eliminate emulation overhead
+  - allow for better management of shared devices
+
+![](images/2020-04-07-20-48-27.png)
 
 ## 25. Hardware Virtualization
 
@@ -318,7 +325,7 @@ Approach: device access control split between
 With hardware support for virtualization, guest VMs can run unmodified and can have access to the underlying devices. Given this do you think the split-device driver model is still relevant?
 
 A: Yes.
-可以定义 device 怎么 share, 而不是 depend on 特定的硬件
+可以自己定义 how to share device, 而不是 depend on特定的硬件来share device
 
 ## 27. x86 VT Revolution
 ![](images/2020-04-07-21-06-36.png)

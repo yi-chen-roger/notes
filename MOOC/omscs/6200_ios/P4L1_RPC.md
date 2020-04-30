@@ -66,6 +66,7 @@ Benefits of RPC
 - Why
   - client-side bind decision
   - runtime to automate stub generation
+
 ==> Interface Definition Language(IDL)
 
 
@@ -83,6 +84,7 @@ RPC can use IDL that is:
 JEST INTERFACE! NOT IMPLEMENTATION!
 
 ## 9. Marshalling
+array
 ![](images/2020-04-08-00-01-08.png)
 
 ## 10. Unmarshalling
@@ -136,7 +138,8 @@ in remote calls: foo(x,y) => ??? y points to location in caller address space
 ```
 Solutions:
 - no pointers!
-- serialize pointers; copy referenced("pointed to") data structure to send buffer
+- serialize pointers
+  - copy referenced("pointed to") data structure to send buffer
 
 ## 14. Handling Partial Failures
 when a client hangs .... what's the problem?
@@ -173,14 +176,14 @@ design decisions for RPC systems
 e.g., Sun RPC, Java RMI
 
 ## 17. What is Sun RPC?
-developed in 80s by Sun for UNIX;
-now widely available on other platforms
+- developed in 80s by Sun for UNIX;
+- now widely available on other platforms
 
 Design Choices
-Binding => per-machine registry daemon
-IDL => XDR (for interface specification and for encoding)
-Pointers => allowed and serialized
-Failures => retries; return as much information as possible
+- Binding => per-machine registry daemon
+- IDL => XDR (for interface specification and for encoding)
+- Pointers => allowed and serialized
+- Failures => retries; return as much information as possible
 
 ## 18. SunRPC Overview
 - client-server via procedure calls
@@ -198,7 +201,6 @@ Failures => retries; return as much information as possible
 - provides SunRPC/XDR documentation and code examples
 - older online reference still relevant
 - Linux man pages for "rpc"
-![](images/2020-04-08-02-26-07.png)
 
 [Sun RPC Documents (maintained by Oracle)](https://docs.oracle.com/cd/E19683-01/816-1435/index.html)
 
@@ -300,21 +302,21 @@ rpcgen square.x -C          ==> square_out*
 rpcgen square.x -C -M       ==> enum clnt_stat
 
 ## 23. SunRPC Registry
-- RPC daemon == portmapper
+- RPC daemon == portmapper (server and client)
   - `/sbin/portmap` (need sudo privileges)
 - Query
   - `/usr/sbin/rpcinfo -p`
   - program id, version, protocol(tcp,udp), socket port number, service name...
   - portmapper runs with tcp and udp on port 111
 
-## 24. SunRPC Registry
+## 24. SunRPC Binding
 ```
 CLIENT* clnt_handle;
 clnt_handle = clnt_create(rpc_host_name, SQUARE_PROG, SQUARE_
 VERS, "tcp")
 ```
 
-CLIENT type
+return type is `CLIENT` type
 - client handle
 - status, error, authentication ...
 
@@ -327,8 +329,12 @@ Additional XDR types
 - quadruple (128-bit integer)
 - opaque(similar to c byte type)
   - uninterpreted binary data
+
+
 Fixed-length array
 - e.g., int data[80]
+
+
 Variable-length variable
 - e.g., int data<80> 
 - translates into a data structure with "len" and "val" fields
@@ -342,7 +348,7 @@ Variable-length variable
 `int data<5>;` 
 Assume the array is full, How many bytes are needed to represent this 5 element array in a c client on a 32-bit machine
 
-A: 28 bytes
+Answer: 28 bytes
 int len -> 4B 
 int * val -> 4B
 int * 5 elem -> 4B * 5
@@ -358,17 +364,19 @@ int * 5 elem -> 4B * 5
 
 ## 28. Encoding
 ### What goes on the Wire?
-- Transport header
-  - e.g. TCP, UDP
+
 - RPC header
   - service procedure ID, Version number, request ID ...
 - Actual data
   - arguments or results
   - encoded into a bytestream depending on data type
+- Transport header
+  - e.g. TCP, UDP
 
 ## 29. XDR Encoding
 XDR == IDL + the encoding
   - i.e., the binary representation of data "on-the-wire"
+
 XDR Encoding Rules
   - all data types are encoded in multiples of 4 bytes
   - big endian is the transmission standard
@@ -395,6 +403,7 @@ Assume the array is full, How many bytes are needed to encode this 5 element arr
 (Do not include bytes for headers/protocol!)
 
 A: 24 bytes
+4 for leng + 5*4 for data
 
 ## 31. Java RMI
 ### Java Remote Method Invocations - RMI
