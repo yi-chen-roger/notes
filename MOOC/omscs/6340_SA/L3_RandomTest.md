@@ -145,12 +145,95 @@ the depth of the concurrency bug in  `2`
 
 
 ## Cuzz Algorithm
-``` shell
+``` c
 Input:
     int n; // # of threads
     int k; // no. of steps - guessed from previous runs
     int d; // target bug depth - randomly chosen
 State:
-    int pri[] = new int[n];
-    int change
+    int pri[] = new int[n];         //thread priorities
+    int change[] = new int[d-1];    //when to change priorities
+    int stepCnt;                    //current step count
+
+Initialize() {
+    stepCnt= 0;
+    a = random_permutation(1,n); 
+    for (int tid = 0; tid < n; tid++) {
+        pri[tid] = a[tid] + d;
+    for (int i = 0; i < d - 1; i++)
+        change[i] = rand(1,k);
+}
+
+Sleep(tid) {
+    stepCnt++;
+    if stepCnt == change[i] for some i
+        pri[tid] = i; //到达变化点的时候把priority下降到以下
+    while (tid is not highest priority enabled thread)
+        spin; 
+}
+
+
+}
 ```
+
+## Probabilistic Guarantee
+Given a program with:
+- n thread (~tens)
+- k steps (~millions)
+- bug of depth d (1 or 2)
+
+Cuzz will find the bug with a probability of at least $\frac{1}{n k^{d-1}}$ in each run
+
+## Proof of Guarantee (Sketch)
+![](images/2020-06-27-11-43-41.png)
+- Probability(choose correct initial thread priorities) $>=1 / n$
+- Probability(choose correct step to switch thread priorities) $>=1 / k$
+- Probability(triggering bug)  $>=1 / k$
+- for d depth  $>=1 / nk^{d-1}$
+
+## Measured vs. Worst-Case Probability
+- Worst-case guarantee is for hardest-to-find bug of given depth
+- If bugs can be found in multiple ways, probabilites add up!
+- Increasing number of threads helps
+    - Leads to more ways of trigger a bug
+
+![](images/2020-06-27-11-48-30.png)
+
+## Cuzz: Case Study
+- Measure bug-finding probability of stress testing vs. Cuzz
+    - Without Cuzz: 1 Fail in 238,820 runs (ratio = 0.000004817)
+    - With Cuzz: 12 Fail in 320 runs (ratio = 0.0375)
+
+1 day of stress testing = 11 seconds of Cuzz testing!
+
+## Cuzz: Key Takeaways
+- Bug depth: useful metric for concurrency testing efforts
+- Systematic randomization improves concurrency testing
+- Whatever stress testing can do, Cuzz can do better
+    - Effective in flushing out bugs with existing tests
+    - Scales to large number of threads, long-running tests
+    - Low adoption barrier
+
+## Random Testing: Pros and Cons
+Pros:
+    - Easy to implement
+    - Provably good coverage given enough tests
+    - Can work with programs in any format
+    - Appealing for finding security vulnerabilities
+COns:
+    - Inefficient test suite
+    - Might find bugs that are unimportant
+    - Poor coverage 
+
+## Coverage of Random Testing
+![](images/2020-06-27-14-41-40.png)
+- The lexer is very heavily tested by random inputs
+- But testing of later stages is much less efficient
+
+## What Have We Learned?
+Random testing:
+-  Is effective for testing security, mobile apps, and concurrency
+- Should complement not replace systematic, formal testing
+- Must generate test inputs from a reasonable distribution to be effective
+- May be less effective for systems with multiple layer(e.g. compilers)
+
