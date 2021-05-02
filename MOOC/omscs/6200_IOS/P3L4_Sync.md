@@ -15,7 +15,7 @@ toy shop
   - Hey, I'm done
 - waiting hurts performance
   - workers waster productive time while waiting
-  
+
 OS
 - may repeatedly check to continue
   - sync using `spinlocks`
@@ -39,10 +39,10 @@ Spinlock is like a mutex
 - lock and unlock(free)
 
 But
-- lock == busy 
+- lock == busy
   -  spinning!!!
 
-```
+``` c
 spinlock_lock(s);
   // critical section;
 spinlock_unlock(s);
@@ -56,11 +56,11 @@ spinlock_unlock(s);
 semaphore == integer value => count-based sync
 - on init
   - assigned a max value (positive int) => maximum count
-- on try (wait) 
+- on try (wait)
   - if non-zero => decrement and proceed => counting semaphore
 - if initialized with 1
   - semaphore == mutex (binary semaphore)
-- on exit(post) 
+- on exit(post)
   - increment
 
 Semaphores designed by E.W.Dijkstra
@@ -69,7 +69,7 @@ Semaphores designed by E.W.Dijkstra
 
 
 ## 6. POSIX Semaphores
-```
+``` c
 #inlcude <semaphore.h>
 sem_t sem;
 sem_init(sem_t *sem, int pshared, int count)
@@ -78,7 +78,7 @@ sem_post(sem_t *sem)
 ```
 
 ## 7. Mutex Via Semaphore Quiz
-```
+``` c
 sem_t sem;
 sem_init(sem_t *sem, 0, 1);
 
@@ -99,7 +99,7 @@ RWlocks
 - specify the type of access, then lock behaves accordingly
 
 ## 9. Using Reader Writer Locks
-```
+``` c
 #include <linux/spinlock.h>
 rwlock_t m;
 read_lock(m);
@@ -117,7 +117,7 @@ write_unlock(m);
 
 semantic differences in different implementation
 - recursive read-lock... -> what happens on read- unlock?
-- upgrade/downgrade priority? 
+- upgrade/downgrade priority?
   - update read lock to write lock
 - interaction with scheduling policy
   - e.g., newly coming reading-lock block if higher priority write waiting
@@ -173,7 +173,7 @@ spinlock_lock(lock):
 spinlock_unlock(lock):
   lock = free;  // 0 = free; 1 = busy
 
-``` 
+```
 incorrect (查看和设置lock不是原子操作)
 inefficient
 
@@ -202,7 +202,7 @@ spinlock_lock(lock):
   lock = busy;
 ```
 Problem:
-- concurrent check/update on different CPUs can overlap 
+- concurrent check/update on different CPUs can overlap
 
 
  hardware-supported atomic instructions
@@ -253,10 +253,10 @@ Caches
 Cache-Coherence
 - non-cache coherent (NCC) 硬件不保证cache一致,责任在software
 - cache coherent(CC)
-  
+
 ![](images/2020-03-23-03-09-30.png)
 
-Write-invalidate(WI) 
+Write-invalidate(WI)
 - lower bandwidth
 - amortize cost (改很多次,只需要invalidate一次)
 
@@ -323,8 +323,8 @@ spinlock_unlock(lock):
 // spins on cache (lock == busy)
 // atomic if freed (test_and_set)
 
-spinlock_lock(lock) 
-  while((lock == busy) or 
+spinlock_lock(lock)
+  while((lock == busy) or
     (test_and_set(lock) == busy))
 ```
 named as `test_and_test_and_set` spinlock or `spin on read`, `spin on cached value`
@@ -371,14 +371,14 @@ spinlock_lock(lock)
 
 
 delay after each lock reference
-  - does't spin constantly 
+  - does't spin constantly
   - works on Non cache coherence architectures
   - but can hurt delay even more
 
 ``` c
   spinlock_lock(lock)
-    while((lock == busy) or 
-      (test_and_set(lock) == busy)) 
+    while((lock == busy) or
+      (test_and_set(lock) == busy))
     {
       delay();
     }
@@ -398,7 +398,7 @@ Dynamic Delay(backoff-based)
 - 问题
   - delay after each reference will keep growing based on contention or length of critical section (我们并不想仅仅因为运行一个长的critical section就增加delay时间)
 
-## 27. Queuing Lock 
+## 27. Queuing Lock
 Common problem in spinlock implementations
 - Everyone sees the lock is free at the same time
   - Anderson Queueing lock (解决第一个问题，自然解决第二个问题)

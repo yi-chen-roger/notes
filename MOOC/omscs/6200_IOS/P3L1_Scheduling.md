@@ -57,7 +57,7 @@ Initial Assumptions
 - no preemption
 - single CPU
 
-metrics 
+metrics
 - throughput
 - average job completion time
 - average job wait time
@@ -131,9 +131,9 @@ T3 finishes at 11
 ... assume SJF here
 ![](images/2020-04-29-11-42-24.png)
 
-- Priority: 
+- Priority:
     - We want T1,T2, T3
-- But Order of execution: 
+- But Order of execution:
     - T2, T3, T1 => priorities "inverted"
 - Solution:
     - temp boost priority of mutex owner
@@ -142,10 +142,10 @@ T3 finishes at 11
 ## 10. Round Robin Scheduling
 - pick up first task from queue(like FCFS)
 - task may yield, to wait on I/O (unlike fCFS), put the task back to the tail of the runqueue
-- Round Robin with Priorities 
+- Round Robin with Priorities
     - include preemption
 - Round Robin with interleaving
-    - timeslicing   
+    - timeslicing
 
 ## 11. Timesharing and Timeslices
 - timeslice == maximum amount of uninterrupted time given to a task => also called time quantum
@@ -287,11 +287,11 @@ What about tasks that dynamically change phases in their behavior?
 ![](images/2020-04-29-12-41-37.png)
 
 1. tasks enter topmost queue
-2. 
-    - if task yields voluntarily 
+2.
+    - if task yields voluntarily
         - good choice! keep task at this level
     - if task uses up entire timeslice
-        - push down to lower level    
+        - push down to lower level
 3. task in lower queue gets priority boost when releasing CPU due to I/O waits
 
 
@@ -308,13 +308,13 @@ Linux O(1)
     - depends on priority
     - smallest for low priority
     - highest for high priority
-    - ![](images/2020-04-29-12-51-36.png)    
+    - ![](images/2020-04-29-12-51-36.png)
 - Feedback
     - sleep time: waiting/idling
-    - longer sleep => interactive 
+    - longer sleep => interactive
         => priority -5 (boost)
-    - smaller sleep => computer-intensive 
-        => priority +5 (lowered)     
+    - smaller sleep => computer-intensive
+        => priority +5 (lowered)
 - Runqueue == 2 arrays of tasks queues
     - Active
         - used to pick next task to run
@@ -324,7 +324,7 @@ Linux O(1)
         - task remain in queue in active array until timeslice expires
     - Expired
         - inactive list
-        - when no more tasks in active array => swap active and expired 
+        - when no more tasks in active array => swap active and expired
     - ![](images/2020-04-29-14-46-33.png)
 - Introduced in 2.5 by Ingo Molnor
 ... but, workloads changes
@@ -389,7 +389,7 @@ cache-affinity important!
 - multiple memory nodes
 - memory node closer to a "socket" of multiple processor
     - access to local memory node faster than access to remote memory node
-    - keep tasks on CPU closer to memory node where their state is 
+    - keep tasks on CPU closer to memory node where their state is
     - NUMA-aware scheduling
 
 
@@ -397,16 +397,16 @@ cache-affinity important!
 ## 22. Hyperthreading (SMT)
 ![](images/2020-04-29-13-49-59.png)
 - multiple hardware-supported execution contexts
-- still 1 CPU but 
+- still 1 CPU but
 - with very fast context switch
 - Lots of names
     - hardware multithreading
     - hyperthreading
     - chip multithreading(CMT)
     - simultaneous multithreading(SMT)
-```
+``` c
 if (t_idle > 2 * t_ctx_switch)
-    then context switch to hide latency 
+    then context switch to hide latency
 ```
 - SMT ctx_switch - 0 cycles
 - memory load - 100 cycles
@@ -417,7 +417,7 @@ What kinds of threads should be co-schedule on hardware threads?
 
 ## 23. Scheduling for Hyperthreading Platforms
 Assumptions:
-1. thread issues instructions on each cycle 
+1. thread issues instructions on each cycle
     max instruction-per-cycle <==> 1PC = 1
 2. memory access = 4 cycles
 3. Hardware switching instantaneous
@@ -491,7 +491,7 @@ metric == IPC
  - max IPC = 4 (4 instruction per cycle is the best case)
 
 ## 26-27 CPI Experiment Results
-- with mixed CPI 
+- with mixed CPI
     - processor pipeline well utilized
     - high IPC
 - with same CPI
@@ -501,7 +501,7 @@ metric == IPC
 
 
 => CPI is a great metrics!
-- Let's build a scheduler that use it, and 
+- Let's build a scheduler that use it, and
 - Let's build a hardware that tracks it!
 
 Not So FAST!!!!
